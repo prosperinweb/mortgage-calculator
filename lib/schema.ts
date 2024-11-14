@@ -12,7 +12,7 @@ export const mortgageSchema = z.object({
   interestRate: z.number()
     .min(0.1, "Minimum rate is 0.1%")
     .max(15, "Maximum rate is 15%")
-    .transform(val => Math.round(val * 100) / 100),
+    .transform(val => Number(val.toFixed(2))),
   type: z.enum(["repayment", "interest-only"])
 })
 

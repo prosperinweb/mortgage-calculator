@@ -113,7 +113,7 @@ export function ResultsCard({
         <div className="rounded-lg bg-secondary/50 p-4 text-sm">
           <p className="text-muted-foreground">
             This is an estimate based on the information you provided. Actual payments
-            may vary depending on your lender's terms and conditions.
+            may vary depending on your lender&apos;s terms and conditions.
           </p>
         </div>
       </CardContent>

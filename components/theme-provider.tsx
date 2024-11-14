@@ -1,15 +1,14 @@
-import { createContext, useContext, useEffect, useState } from 'react'
-import { useTheme as useNextTheme } from 'next-themes'
+import { ThemeProvider as NextThemeProvider } from 'next-themes'
 
 export function ThemeProvider({
   children,
   ...props
 }: {
   children: React.ReactNode
-  attribute?: string
+  attribute?: 'class' | 'data-theme'
   defaultTheme?: string
   enableSystem?: boolean
   disableTransitionOnChange?: boolean
 }) {
-  return <div {...props}>{children}</div>
+  return <NextThemeProvider {...props}>{children}</NextThemeProvider>
 }

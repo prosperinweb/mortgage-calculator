@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint"
   },
-  "packageManager": "npm@10.7.0",
+  "packageManager": "pnpm@9.12.3",
   "overrides": {
     "react": "19.0.0-rc-69d4b800-20241021",
     "react-dom": "19.0.0-rc-69d4b800-20241021"
