@@ -47,18 +47,23 @@ type FieldConfig = {
 const FormFieldWithTooltip = ({
   label,
   tooltip,
+  inputId,
 }: {
   label: string;
   tooltip: string;
+  inputId: string;
   children: React.ReactNode;
 }) => (
-  <div className="flex items-center justify-between">
-    <FormLabel className="text-base md:text-lg text-neutral-700">
+  <div className="flex items-center justify-between gap-4">
+    <FormLabel
+      htmlFor={inputId}
+      className="text-base md:text-lg text-neutral-700"
+    >
       {label}
     </FormLabel>
     <Tooltip>
       <TooltipTrigger asChild>
-        <Info className="h-4 w-4 text-muted-foreground" />
+        <Info className="h-4 w-4 text-muted-foreground shrink-0" />
       </TooltipTrigger>
       <TooltipContent>
         <p className="w-[200px] md:w-[250px]">{tooltip}</p>
@@ -174,7 +179,8 @@ export function MortgageForm({ onCalculate }: MortgageFormProps) {
       max: number;
       step: number;
       className?: string;
-    }
+    },
+    inputId: string
   ) => (
     <div className="flex rounded relative overflow-hidden">
       {config.prefix && (
@@ -183,6 +189,7 @@ export function MortgageForm({ onCalculate }: MortgageFormProps) {
         </span>
       )}
       <Input
+        id={inputId}
         type="number"
         className={cn(
           config.prefix && "pl-12",
@@ -212,28 +219,36 @@ export function MortgageForm({ onCalculate }: MortgageFormProps) {
     </div>
   );
 
-  const renderField = (config: FieldConfig) => (
-    <FormField
-      key={config.name}
-      control={form.control}
-      name={config.name}
-      render={({ field }) => (
-        <FormItem className="space-y-4">
-          <FormFieldWithTooltip label={config.label} tooltip={config.tooltip}>
-            {null}
-          </FormFieldWithTooltip>
-          <FormControl>
-            {config.name !== "type" &&
-              renderNumberInput(
-                field as { onChange: (value: number) => void; value: number },
-                config.inputConfig
-              )}
-          </FormControl>
-          <FormMessage />
-        </FormItem>
-      )}
-    />
-  );
+  const renderField = (config: FieldConfig) => {
+    const inputId = `mortgage-${config.name}-input`;
+    return (
+      <FormField
+        key={config.name}
+        control={form.control}
+        name={config.name}
+        render={({ field }) => (
+          <FormItem className="space-y-4">
+            <FormFieldWithTooltip 
+              label={config.label} 
+              tooltip={config.tooltip}
+              inputId={inputId}
+            >
+              {null}
+            </FormFieldWithTooltip>
+            <FormControl>
+              {config.name !== "type" &&
+                renderNumberInput(
+                  field as { onChange: (value: number) => void; value: number },
+                  config.inputConfig,
+                  inputId
+                )}
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+    );
+  };
 
   return (
     <CustomTooltipProvider>
@@ -251,7 +266,7 @@ export function MortgageForm({ onCalculate }: MortgageFormProps) {
             </Button>
           </div>
 
-          <div className="">
+          <div className="space-y-8">
             {renderField(FIELD_CONFIG[0])}
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
