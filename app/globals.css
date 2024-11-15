@@ -51,10 +51,16 @@
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border-border p-0 m-0;
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .card-heading {
+    @apply text-3xl lg:text-2xl font-bold;
   }
 }
 
@@ -102,7 +108,7 @@
 }
 
 .input-animation {
-  transition: all 0.2s ease;
+  transition: all 0.1s ease;
 }
 
 .input-animation:focus {
